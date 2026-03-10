@@ -3,9 +3,6 @@ venv/
 env/
 .env
 
-# NCNN build directory (if you compile it locally)
-ncnn/
-
 # MacOS
 .DS_Store
 .AppleDouble
