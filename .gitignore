@@ -1,0 +1,21 @@
+# Environments
+venv/
+env/
+.env
+
+# NCNN build directory (if you compile it locally)
+ncnn/
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDEs
+.vscode/
+.idea/
