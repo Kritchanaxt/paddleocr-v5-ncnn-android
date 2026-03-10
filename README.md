@@ -18,7 +18,7 @@ flowchart TD
 
     subgraph ONNX [ONNX Standard]
         B(ONNX Model<br/>Dynamic Shape)
-        C(ONNX Model<br/>Static Shape: 1x3x48x320)
+        C(ONNX Model<br/>Static Shape: 1x3x32x480)
     end
 
     subgraph NCNN [NCNN Mobile Framework]
@@ -40,8 +40,8 @@ flowchart TD
 
 ### Why these steps?
 1.  **Paddle2ONNX**: Converts the proprietary Paddle format to the standard ONNX format.
-2.  **ONNX Sim + Fix Shape**: Mobile GPU drivers often crash with dynamic input shapes. We fix the input to `1,3,48,320` to ensure stability.
-3.  **NCNN Optimize**: Converts weights to FP16 (Half precision), reducing the model size from ~7MB to **3.7MB** without significant accuracy loss.
+2.  **ONNX Sim + Fix Shape**: Mobile GPU drivers and SVTR layers often fail with dynamic input shapes. We fix the input to `1,3,32,480` (Height 32, Width 480) to ensure stability and compatibility with PP-OCRv5's MatMul/InnerProduct layers.
+3.  **NCNN Optimize**: Converts weights to FP16 (Half precision), reducing the model size to ~3.9MB without significant accuracy loss.
 
 ---
 
@@ -56,15 +56,15 @@ paddleocr-v5-ncnn-android/
 │   ├── paddle/              # 1. Raw PaddleOCR Models (Source)
 │   │   ├── en/
 │   │   └── th/
-│   ├── onnx/                # 2. Intermediate ONNX Models (Fixed Shape: 1x3x48x320)
+│   ├── onnx/                # 2. Intermediate ONNX Models (Fixed Shape: 1x3x32x480)
 │   │   ├── rec_en_sim_fixed.onnx
 │   │   └── rec_th_sim_fixed.onnx
 │   └── ncnn/                # 3. 🎉 FINAL RESULTS (Ready for Android!)
 │       ├── en/
-│       │   ├── rec_en_opt.bin   # Optimized Weights (3.7 MB)
+│       │   ├── rec_en_opt.bin   # Optimized Weights (3.9 MB)
 │       │   └── rec_en_opt.param # Network Graph
 │       └── th/
-│           ├── rec_th_opt.bin   # Optimized Weights (3.7 MB)
+│           ├── rec_th_opt.bin   # Optimized Weights (3.9 MB)
 │           └── rec_th_opt.param # Network Graph
 ```
 

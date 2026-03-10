@@ -9,12 +9,12 @@ def run_cmd(cmd):
         sys.exit(1)
 
 print("=== 1. Convert PaddleOCR Models to ONNX ===")
-run_cmd('paddle2onnx --model_dir models/paddle/en --model_filename inference.json --params_filename inference.pdiparams --save_file models/onnx/rec_en.onnx --opset_version 11')
-run_cmd('paddle2onnx --model_dir models/paddle/th --model_filename inference.json --params_filename inference.pdiparams --save_file models/onnx/rec_th.onnx --opset_version 11')
+run_cmd('.venv/bin/paddle2onnx --model_dir models/paddle/en --model_filename inference.json --params_filename inference.pdiparams --save_file models/onnx/rec_en.onnx --opset_version 11')
+run_cmd('.venv/bin/paddle2onnx --model_dir models/paddle/th --model_filename inference.json --params_filename inference.pdiparams --save_file models/onnx/rec_th.onnx --opset_version 11')
 
 print("\n=== 2. Simplify ONNX and Fix Dynamic Shape ===")
-run_cmd('onnxsim models/onnx/rec_en.onnx models/onnx/rec_en_sim_fixed.onnx --overwrite-input-shape x:1,3,48,320')
-run_cmd('onnxsim models/onnx/rec_th.onnx models/onnx/rec_th_sim_fixed.onnx --overwrite-input-shape x:1,3,48,320')
+run_cmd(".venv/bin/onnxsim models/onnx/rec_en.onnx models/onnx/rec_en_sim_fixed.onnx --overwrite-input-shape 'x:1,3,32,480'")
+run_cmd(".venv/bin/onnxsim models/onnx/rec_th.onnx models/onnx/rec_th_sim_fixed.onnx --overwrite-input-shape 'x:1,3,32,480'")
 
 print("\n=== 3. Convert ONNX to NCNN ===")
 run_cmd('./ncnn/build/tools/onnx/onnx2ncnn models/onnx/rec_en_sim_fixed.onnx models/ncnn/en/rec_en.param models/ncnn/en/rec_en.bin')

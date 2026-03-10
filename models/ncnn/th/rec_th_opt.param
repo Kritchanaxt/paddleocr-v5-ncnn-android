@@ -303,7 +303,7 @@ Swish                    Mul.159                  1 1 Add.217 p2o.pd_op.swish.3.
 InnerProduct             MatMul.11                1 1 p2o.pd_op.swish.3.0 Add.219 0=120 1=1 2=28800
 BinaryOp                 Add.220                  2 1 Add.211_splitncnn_0 Add.219 Add.221
 LayerNorm                Add.224                  1 1 Add.221 Add.225 0=120 1=1.000000e-06
-Reshape                  Reshape.51               1 1 Add.225 p2o.pd_op.reshape.36.0 0=120 1=-1 2=1
+Reshape                  Reshape.51               1 1 Add.225 p2o.pd_op.reshape.36.0 0=120 1=60 2=1
 Permute                  Transpose.7              1 1 p2o.pd_op.reshape.36.0 p2o.pd_op.transpose.7.0 0=4
 Convolution              Conv.35                  1 1 p2o.pd_op.transpose.7.0 p2o.pd_op.conv2d.21.0 0=480 1=1 5=1 6=57600
 Swish                    Mul.162                  1 1 p2o.pd_op.conv2d.21.0 p2o.pd_op.swish.4.0
